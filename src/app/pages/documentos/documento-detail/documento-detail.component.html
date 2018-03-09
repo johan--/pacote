@@ -1,0 +1,48 @@
+<nb-card>
+  <nb-card-header>
+      <i class="fa fa-chevron-circle-left" (click)="goBack()"></i>  Documentos {{ entidad.nombre }}
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="row">
+      <div class="offset-sm-10 col-sm-2">
+        <button class="btn btn-primary" (click)="showSmallModal()">Agregar</button>
+      </div>
+    </div>
+    <br>
+    <!-- <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
+    (custom)="onCustom($event)">
+    </ng2-smart-table> -->
+
+    <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Documento</th>
+            <th scope="col">Fecha Vencimiento</th>
+            <th scope="col">Fecha Preaviso</th>
+            <th scope="col">Obligatorio</th>
+            <th scope="col">Vencido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documentos">
+            <th><i class="fa fa-pencil" (click)="editDocumento(doc.id)"></i></th>
+            <th scope="row">
+              <a routerLink="/pages/documentos/{{doc.id}}">{{ doc.tipoDocumento }}</a>
+            </th>
+            <td>{{doc.fechaVencimiento }}</td>
+            <td>{{doc.fechaPreaviso }}</td>
+            <td>
+              <div *ngIf="doc.requerido; else elseBlock"><i class="fa fa-check"></i></div>
+              <ng-template #elseBlock><i class="fa fa-times"></i></ng-template>
+             </td>
+             <td>
+                <div *ngIf="doc.vencido; else elseBlock"><i class="fa fa-check"></i></div>
+                <ng-template #elseBlock><i class="fa fa-times"></i></ng-template>
+               </td>
+          </tr>
+        </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

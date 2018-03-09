@@ -14,6 +14,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'Documentos',
+    icon: 'nb-compose',
+    link: '/pages/documentos',
+    children: [
+      {
+        title: 'Vehiculos',
+        link: '/pages/documentos/vehiculos',
+      },
+      {
+        title: 'Operadores',
+        link: '/pages/documentos/operadores',
+      }
+    ]
+  },
+  {
     title: 'UI Features',
     icon: 'nb-keypad',
     link: '/pages/ui-features',

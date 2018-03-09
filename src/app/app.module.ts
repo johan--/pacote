@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { DocumentoService } from './services/documento.service';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -29,6 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   bootstrap: [AppComponent],
   providers: [
+    DocumentoService,
     { provide: APP_BASE_HREF, useValue: '/' },
   ],
 })

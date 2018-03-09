@@ -11,6 +11,10 @@ const routes: Routes = [{
     path: 'home',
     component: HomeComponent,
   }, {
+    path: 'documentos',
+    loadChildren: './documentos/documentos.module#DocumentosModule',
+  }, 
+  {
     path: 'ui-features',
     loadChildren: './ui-features/ui-features.module#UiFeaturesModule',
   }, {

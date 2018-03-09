@@ -10,8 +10,21 @@
         
         <h5>Últimos documentos cargados</h5>
         <hr>
-
         <div class="card-deck">
+          <div *ngFor="let doc of documentos" class="card">
+            <img class="card-img-top" src="{{ doc.fileThumbnail}}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ doc.tipoDocumento }}</h5>
+              <a href="{{ doc.fileDownloadUrl }}" class="card-link">Download</a>
+              <p class="card-text"></p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Última actualización {{ doc.updated }}</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="card-deck">
           <div class="card">
             <img class="card-img-top" src="assets/images/cover1.jpg" alt="Card image cap">
             <div class="card-body">
@@ -97,7 +110,7 @@
             </div>
           </div>
           
-        </div>
+        </div> -->
         
         <br>
       </nb-card-body>

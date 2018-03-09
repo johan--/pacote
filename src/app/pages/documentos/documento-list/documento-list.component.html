@@ -1,0 +1,44 @@
+<nb-card>
+  <nb-card-header>
+    Documentos Vehiculos
+  </nb-card-header>
+
+  <nb-card-body>
+    <form class="form-inline">
+      <input type="text" class="form-control full-width" placeholder="Ingrese parámetros de búsqueda">
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+    <br>
+
+    <!-- <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table> -->
+
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Vehiculo</th>
+          <th scope="col">Función</th>
+          <th scope="col">Documentos</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehiculo of vehiculos">
+          <th scope="row">
+            <a href="#/pages/documentos/vehiculos/{{ vehiculo.id }}">{{ vehiculo.nombre }}</a>
+          </th>
+          <td>{{ vehiculo.funcion }}</td>
+          <td>
+            <ng-container *ngFor="let doc of vehiculo.documentos" >
+              {{ doc.tipoDocumento }} - 
+            </ng-container>
+          </td>
+          <td>
+            <div *ngIf="vehiculo.statusOk; else elseBlock"><i class="fa fa-check"></i></div>
+            <ng-template #elseBlock><i class="fa fa-times"></i></ng-template>
+           </td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

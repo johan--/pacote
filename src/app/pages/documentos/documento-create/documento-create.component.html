@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header></nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-3">
+              <!-- <div class="card">
+                  <img class="card-img-top" src="assets/images/cover1.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">VTV</h5>
+                    <p class="card-text"></p>
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                  </div>
+                </div> -->
+                <input type="file" ng2FileSelect [uploader]="uploader" />
+                <br>
+          </div>
+          <div class="col-md-9">
+            <form class="form-horizontal" [formGroup]="documentoForm" (ngSubmit)="onSubmit()" novalidate>
+              <div class="form-group row">
+                <label for="inputVencimiento" class="col-sm-2 form-control-label">Vencimiento</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input class="form-control" id="inputVencimiento" placeholder="Vencimiento"
+                      formControlName="fechaVencimiento" ngbDatepicker #vto="ngbDatepicker">
+                      <span class="input-group-append">
+                        <button class="btn btn-primary btn-icon input-group-text" (click)="vto.toggle()" type="button">
+                          <i class="fa fa-calendar"></i>
+                        </button>
+                      </span>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label for="inputPreaviso" class="col-sm-2 form-control-label">Preaviso</label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input class="form-control" id="inputPreaviso" placeholder="Preaviso"
+                        formControlName="fechaPreaviso" ngbDatepicker #pre="ngbDatepicker">
+                      <span class="input-group-append">
+                          <button class="btn btn-primary btn-icon input-group-text" (click)="pre.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                          </button>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <p>Form value: {{ documentoForm.value | json }}</p>
+              <div class="form-group row">
+                <div class="offset-sm-2 col-sm-10">
+                  <button type="button" (click)="cancelar()" class="btn btn-danger">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
