@@ -15,7 +15,7 @@ const routes: Routes = [{
       component: DocumentoListComponent,
     }, 
     {
-      path: 'vehiculos/:idVehiculo',
+      path: 'vehiculos/:idEntidad',
       component: DocumentoDetailComponent,
     },
     {

@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import {
+  FormioResourceCreateComponent,
+  FormioResourceService,
+  FormioResourceConfig
+} from 'angular-formio/resource';
 
 import { DocumentoService } from '../../../services/documento.service';
 import { IDocumento } from '../../../interfaces/IDocumento';
@@ -11,20 +17,25 @@ import { IDocumento } from '../../../interfaces/IDocumento';
   templateUrl: './documento-view.component.html',
   styleUrls: ['./documento-view.component.scss']
 })
-export class DocumentoViewComponent implements OnInit {
+export class DocumentoViewComponent extends FormioResourceCreateComponent implements OnInit {
 
   documentoForm: FormGroup;
   documento: IDocumento;
+  documentoData: any;
   errorMessage: any;
 
   constructor(private location: Location,
               private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private documentoService: DocumentoService) { 
+              private documentoService: DocumentoService,
+              public route: ActivatedRoute,
+              public router: Router,
+              public formioService: FormioResourceService,
+              public formioConfig: FormioResourceConfig,) { 
+      super(formioService, route, router, formioConfig);
   }
     
   ngOnInit() {
-    this.getDocumentoById();
+    this.getDocumentoDinamicoById();
   }
 
   goBack(): void {
@@ -43,16 +54,16 @@ export class DocumentoViewComponent implements OnInit {
       .setValue(this.documento, { onlySelf: true });
   }
 
-  getDocumentoById():void{
+  getDocumentoDinamicoById():void{
     const idDocumento = +this.route.snapshot.paramMap.get('idDocumento');
-    this.documentoService.getDocumentoById(idDocumento)
+    this.documentoService.getDocumentoDinamicoById(idDocumento)
     .subscribe(documento => {
-      this.documento = documento;
-      this.createForm(this.documento);
+      this.documentoData = { data: documento };
     }, error => this.errorMessage = <any>error);
   }
 
-  private onSubmit() {
+
+  onSubmit() {
     console.log('Submit del form');
   };
 

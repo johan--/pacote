@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { DocumentoService } from '../../../services/documento.service';
-import { DocumentoModalTipoDocumentosComponent } from './documento-modal-tipo-documentos.component';
 import { Route } from '@angular/router/src/config';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DocumentoModalTipoDocumentosComponent } from './documento-modal-tipo-documentos.component';
+
 import { IDocumento } from '../../../interfaces/IDocumento';
 import { IEntidad } from '../../../interfaces/IEntidad';
+import { DocumentoService } from '../../../services/documento.service';
 
 @Component({
   selector: 'documento-detail',
@@ -33,7 +34,7 @@ export class DocumentoDetailComponent implements OnInit {
   }
 
   getDocumentosByEntidad():void {
-    const idEntidad = +this.route.snapshot.paramMap.get('idVehiculo');
+    const idEntidad = +this.route.snapshot.paramMap.get('idEntidad');
     this.documentoService.getDocumentosByEntidad(idEntidad)
     .subscribe(documentos => {
       this.documentos = documentos;
@@ -41,7 +42,7 @@ export class DocumentoDetailComponent implements OnInit {
   }
 
   getEntidadById():void{
-    const idEntidad = +this.route.snapshot.paramMap.get('idVehiculo');
+    const idEntidad = +this.route.snapshot.paramMap.get('idEntidad');
     this.documentoService.getEntidadById(idEntidad)
     .subscribe(entidad => {
       this.entidad = entidad;
@@ -62,19 +63,4 @@ export class DocumentoDetailComponent implements OnInit {
 
     activeModal.componentInstance.modalHeader = 'Indique el tipo de documento a crear';
   }
-
-  // onDeleteConfirm(event): void {
-  //   if (window.confirm('Are you sure you want to delete?')) {
-  //     event.confirm.resolve();
-  //   } else {
-  //     event.confirm.reject();
-  //   }
-  // }
-
-  // onCustom(event) {
-  //   if (event.action === 'view'){
-  //     let documentoId = event.data.id;
-  //     this.router.navigate(['pages/documentos', documentoId]);
-  //   }
-  // }
 }

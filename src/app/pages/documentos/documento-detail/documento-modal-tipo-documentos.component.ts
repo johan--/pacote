@@ -3,22 +3,23 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { DocumentosService } from '../../../@core/data/documentos.service';
+import { DocumentoService } from '../../../services/documento.service';
 
 @Component({
   selector: 'documento-modal-tipo-documentos',
   templateUrl: './documento-modal-tipo-documentos.component.html',
-//   styleUrls: ['./documento-view.component.scss']
 })
 export class DocumentoModalTipoDocumentosComponent implements OnInit {
 
 
   tipoDocumentos: any;
   modalHeader: string;
+  errorMessage: any;
+  
 
   constructor(private activeModal: NgbActiveModal,
     private router: Router,
-    private serviceDocumento: DocumentosService) { }
+    private documentoService: DocumentoService) { }
 
   closeModal() {
     this.activeModal.close();
@@ -35,7 +36,13 @@ export class DocumentoModalTipoDocumentosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tipoDocumentos = this.serviceDocumento.getTipoDocumentos();
+    this.getTiposDocumentos();
   }
 
+  getTiposDocumentos():void{
+    this.documentoService.getTiposDocumentos()
+    .subscribe(tiposDocumentos => {
+      this.tipoDocumentos = tiposDocumentos;
+    }, error => this.errorMessage = <any>error);
+  }
 }

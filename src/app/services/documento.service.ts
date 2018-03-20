@@ -7,78 +7,136 @@ import { of } from 'rxjs/observable/of';
 import { IDocumento } from './../interfaces/IDocumento';
 import { IEntidad } from '../interfaces/IEntidad';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': 'my-auth-token'
+  })
+};
 
 @Injectable()
 export class DocumentoService {
 
-    private apiUrl = 'https://private-1e69fb-micradoc.apiary-mock.com/documentos';  // URL to web api
+    private apiUrl = 'https://private-1e69fb-micradoc.apiary-mock.com';  // URL to web api
 
     constructor(private http: HttpClient) { }
 
-
     getDocumentos():Observable<IDocumento[]>{
-        return this.http.get<IDocumento[]>(this.apiUrl).pipe(
+      const url = `${this.apiUrl}/documentos`;
+        return this.http.get<IDocumento[]>(url).pipe(
             tap(documentos => this.log(`documentos recuperados`)),
             catchError(this.handleError('getDocumentos', []))
         );
     }
 
-    getDocumentosVehiculos():Observable<IEntidad[]>{
-      const url = `${this.apiUrl}/vehiculos/`;
-      return this.http.get<IEntidad[]>(url).pipe(
-          tap(entidades => this.log(`documentos vehiculos recuperados`)),
-          catchError(this.handleError('getDocumentosVehiculos', []))
+    /**
+     * Retorna un documento identificado por su ID. El objeto retornado 
+     * conforma la interface IDocumento. Ver getDocumentoDinamicoById
+     * para otros usos.
+     * 
+     * @param idDocumento - identificar del documento a recuperar
+     */
+    getDocumentoById(idDocumento: number):Observable<IDocumento>{
+      const url = `${this.apiUrl}/documentos/${idDocumento}`;
+      return this.http.get<IDocumento>(url).pipe(
+        tap(_ => this.log(`documento recuperado con id=${idDocumento}`)),
+        catchError(this.handleError<IDocumento>('getDocumentoById'))
       );
     }
 
-    // /**
-    //  * Retorna un listado de documentos pertenecientes a una entidad.
-    //  * 
-    //  * @param idEntidad - identificar de la entidad que interesa recuperar docs
-    //  */
-    // getDocumentosVehiculoById(idEntidad: number):Observable<IEntidad>{
-    //   const url = `${this.apiUrl}/vehiculos/${idEntidad}`;
-    //   return this.http.get<IEntidad>(url).pipe(
-    //       tap(_ => this.log(`documentos recuperados del vehiculo id =${idEntidad}`)),
-    //       catchError(this.handleError<IEntidad>('getDocumentosVehiculoById'))
-    //   );
-    // }
-    
+    /**
+     * Retorna un documento identificado por su ID. El objeto retornado 
+     * no conforma ninguna interface específica y por lo tanto el objeto
+     * recuperado puede variar su estructura en forma independiente del 
+     * resto de los documento.
+     * Utilizar principalmente para el vista o edicion de documentos que
+     * se han definido en forma dimanica por ejemplo atraves de form.io
+     * 
+     * @param idDocumento - identificar del documento a recuperar
+     */
+    getDocumentoDinamicoById(idDocumento: number):Observable<any>{
+      const url = `${this.apiUrl}/documentos/${idDocumento}`;
+      return this.http.get<any>(url).pipe(
+        tap(_ => this.log(`documento recuperado con id=${idDocumento}`)),
+        catchError(this.handleError<any>('getDocumentoDinamicoById'))
+      );
+    }
+
     /**
      * Retorna un listado de documentos pertenecientes a una entidad.
      * 
      * @param idEntidad - identificar de la entidad que interesa recuperar docs
      */
     getDocumentosByEntidad(idEntidad: number):Observable<IDocumento[]>{
-      const url = `${this.apiUrl}/vehiculos/${idEntidad}`;
+      const url = `${this.apiUrl}/entidades/${idEntidad}/documentos`;
       return this.http.get<IDocumento[]>(url).pipe(
-          tap(documentos => this.log(`documentos recuperados del vehiculo id =${idEntidad}`)),
+          tap(documentos => this.log(`documentos recuperados de la entidad con id =${idEntidad}`)),
           catchError(this.handleError('getDocumentosIdEntidad', []))
       );
     }
 
-    getDocumentoById(id: number):Observable<IDocumento>{
-      const url = `${this.apiUrl}/${id}`;
-      return this.http.get<IDocumento>(url).pipe(
-        tap(_ => this.log(`documento recuperado id=${id}`)),
-        catchError(this.handleError<IDocumento>('getDocumentoById'))
+    /**
+     * Retorna un listado de entidades!!!
+     * Dentro de cada entidad se espera que se encuentren los documentos
+     */
+    getDocumentosVehiculos():Observable<IEntidad[]>{
+      const url = `${this.apiUrl}/entidades/vehiculos`;
+      return this.http.get<IEntidad[]>(url).pipe(
+          tap(entidades => this.log(`documentos vehiculos recuperados`)),
+          catchError(this.handleError('getDocumentosVehiculos', []))
       );
     }
 
-    getEntidadById(id: number):Observable<IEntidad>{
-      let entidad:IEntidad;
-      entidad ={
-        id: "id",
-        nombre: "AAN 348. Toyota Hilux",
-        tipo: "Vehiculo",
-        funcion: "Camioneta",
-        url: "",
-        statusOk: false,
-        documentos:null
-      }
-      return of(entidad);
+    /**
+     * Retorna una identificada por su ID.
+     * 
+     * @param idEntidad - identificar de la entidad a recuperar
+     */
+    getEntidadById(idEntidad: number):Observable<IEntidad>{
+      const url = `${this.apiUrl}/entidades/${idEntidad}`;
+      return this.http.get<IEntidad>(url).pipe(
+        tap(_ => this.log(`entidad recuperada con id=${idEntidad}`)),
+        catchError(this.handleError<IEntidad>('getEntidadById'))
+      );
     }
 
+    /**
+     * Retorna un listado de tipos de documentos.
+     */
+    getTiposDocumentos():Observable<any[]>{
+      const url = `${this.apiUrl}/documentos/tipos_documentos`;
+      return this.http.get<any[]>(url).pipe(
+          tap(entidades => this.log(`tipos documentos recuperados`)),
+          catchError(this.handleError('getTiposDocumentos', []))
+      );
+    }
+
+    /**
+     * Retorna un tipo de documento por su ID.
+     * 
+     * @param idTipoDocumento - identificar del tipo de documento
+     */
+    getTipoDocumentoById(idTipoDocumento: number):Observable<any>{
+      const url = `${this.apiUrl}/documentos/tipos_documentos/${idTipoDocumento}`;
+      return this.http.get<IEntidad>(url).pipe(
+        tap(_ => this.log(`tipo documento recuperado con id=${idTipoDocumento}`)),
+        catchError(this.handleError<IEntidad>('getTipoDocumentoById'))
+      );
+    }
+
+    /**
+     * Agrega un nuevo documento.
+     * 
+     * @param documento - nuevo documento a guardar
+     */
+    addDocumentoDinamico(documento:any):any{
+      console.log(documento)
+      const url = `${this.apiUrl}/documentos`;
+      return this.http.post<any>(url, documento, httpOptions).pipe(
+        tap(_ => this.log(`documento guardado`)),
+        catchError(this.handleError<any>('saveDocumentoDinamico'))
+      );
+    }
 
     /**
      * Handle Http operation that failed.

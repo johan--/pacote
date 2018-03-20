@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header>
+  <nb-card-header *ngIf="entidad">
       <i class="fa fa-chevron-circle-left" (click)="goBack()"></i>  Documentos {{ entidad.nombre }}
   </nb-card-header>
 
@@ -10,9 +10,6 @@
       </div>
     </div>
     <br>
-    <!-- <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"
-    (custom)="onCustom($event)">
-    </ng2-smart-table> -->
 
     <table class="table table-bordered table-hover">
         <thead>
