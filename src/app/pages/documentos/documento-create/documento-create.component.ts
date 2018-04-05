@@ -7,6 +7,7 @@ import { FileUploader } from 'ng2-file-upload';
 
 import { IDocumento } from '../../../interfaces/IDocumento';
 import { DocumentoService } from '../../../services/documento.service';
+import { AppResourceConfig } from '../../../app-resource-config';
 
 import {
   FormioResourceCreateComponent,
@@ -16,34 +17,61 @@ import {
 
  
 const URL = 'create';
+const apiFormUrl = 'http://localhost:3001/';  // URL to web api
 
 @Component({
   selector: 'documento-create',
   templateUrl: './documento-create.component.html',
-  styleUrls: ['./documento-create.component.scss']
-})
-export class DocumentoCreateComponent extends FormioResourceCreateComponent implements OnInit {
+  styleUrls: ['./documento-create.component.scss'],
+  providers: [ FormioResourceService,
+              // AppResourceConfig,
+              {provide: FormioResourceConfig,
+                  // useClass: AppResourceConfig 
+                useValue: {
+                name: 'nuevoForm',
+                form: 'nuevoForm'}
+              
+            }]
+          })
+      // useFactory: () => new AppResourceConfig()
+     
+
+export class DocumentoCreateComponent implements OnInit {
 
   tipoDocumento: any;
   errorMessage: any;
+  formUrl: any;
   public uploader: FileUploader = new FileUploader({url: URL});
 
   constructor(public service: FormioResourceService,
               public config: FormioResourceConfig,
+              // public configOtro: AppResourceConfig,
               public router: Router,
               public location: Location,
               public route: ActivatedRoute,
               public documentoService: DocumentoService) 
               {
-    super(service, route, router, config);
+    // super(service, route, router, config);
+    
     // For manual upload
     // this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
     // https://github.com/valor-software/ng2-file-upload/issues/26
   }
 
   ngOnInit() {
-    super.ngOnInit();
+    
+    // super.ngOnInit();
+    // this.service.formLoaded.then((form) => {
+    //   this.config.form = 'nuevoForm';
+    //   this.service.loadResource(this.route);
+    //   this.service.refresh.emit({
+    //         property: 'submission',
+    //         value: this.service.resource
+    //       });
+    //     })
+    // this.formUrl = 'http://localhost:3001/vtv';
     this.getTipoDocumentoById();
+    this.getForm();
         // Ejemplo para customizar el inicio del form
         // Wait for the parent event to be loaded.
         // this.service.resources['event'].resourceLoaded.then((event) => {
@@ -88,10 +116,18 @@ export class DocumentoCreateComponent extends FormioResourceCreateComponent impl
     this.addDocumentoDinamico(submission.data);
   }
 
-  onSubmitt() {
-    console.log('SUBMISSSION!!!!!');
-    // this.addDocumentoDinamico(submission.data);
+  getForm():void{
+    this.documentoService.getFormulario()
+    .subscribe(config => {
+      this.formUrl = `${apiFormUrl}${config.form}`;
+      console.log(this.formUrl);
+    }, error => this.errorMessage = <any>error);
   }
+
+  // onSubmitt() {
+  //   console.log('SUBMISSSION!!!!!');
+  //   // this.addDocumentoDinamico(submission.data);
+  // }
 
   addDocumentoDinamico(documento:any):void{
     this.documentoService.addDocumentoDinamico(documento)

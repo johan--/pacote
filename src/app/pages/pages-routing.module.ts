@@ -13,6 +13,9 @@ const routes: Routes = [{
   }, {
     path: 'documentos',
     loadChildren: './documentos/documentos.module#DocumentosModule',
+  }, {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule',
   }, 
   {
     path: 'ui-features',

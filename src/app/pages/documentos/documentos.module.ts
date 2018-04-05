@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+// import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
-import { SmartTableService } from '../../@core/data/smart-table.service';
+// import { SmartTableService } from '../../@core/data/smart-table.service';
 
 import { DocumentosRoutingModule } from './documentos-routing.module';
 import { DocumentosComponent } from './documentos.component';
@@ -40,7 +40,7 @@ const components = [
   imports: [
     ThemeModule,
     DocumentosRoutingModule,
-    Ng2SmartTableModule,
+    // Ng2SmartTableModule,
     FileUploadModule,
     ReactiveFormsModule, 
     FormioModule,
@@ -50,7 +50,7 @@ const components = [
     ...components,
   ],
   providers: [
-    SmartTableService,
+    // SmartTableService,
     FormioResources,
     {provide: FormioAppConfig, useValue: AppConfig},
     FormioResourceService,

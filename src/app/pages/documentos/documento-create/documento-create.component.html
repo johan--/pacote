@@ -6,17 +6,20 @@
         <div class="row">
           <div class="col-md-12">
               <!-- <input type="file" ng2FileSelect [uploader]="uploader" /> -->
-              <formio
-              [form]="service.form"
-              [src]="service.formUrl"
-              [submission]="service.resource"
-              [refresh]="service.refresh"
-              [hideComponents]="config.parents"
-              [error]="onError"
-              [success]="onSuccess"
-              (submit)="onSubmit($event)"
-              ></formio>
-              <!-- <p>{{ documentoData }}</p> -->
+              <div *ngIf="formUrl">
+                <formio 
+                [form]="formUrl"
+                
+                [error]="onError"
+                [success]="onSuccess"
+                (submit)="onSubmit($event)"
+                ></formio>
+                <!-- <p>{{ documentoData }}</p> -->
+                <!-- [src]="service.formUrl"
+                [submission]="service.resource"
+                [refresh]="service.refresh"
+                [hideComponents]="config.parents" -->
+            </div>
           </div>
         </div>
       </nb-card-body>

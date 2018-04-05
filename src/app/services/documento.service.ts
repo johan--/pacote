@@ -21,6 +21,14 @@ export class DocumentoService {
 
     constructor(private http: HttpClient) { }
 
+    getFormulario():Observable<any>{
+      const url = `${this.apiUrl}/config`;
+        return this.http.get<any>(url).pipe(
+            tap(config => this.log(`config recuperada`)),
+            catchError(this.handleError('getFormulario', []))
+        );
+    }
+
     getDocumentos():Observable<IDocumento[]>{
       const url = `${this.apiUrl}/documentos`;
         return this.http.get<IDocumento[]>(url).pipe(
@@ -48,8 +56,8 @@ export class DocumentoService {
      * Retorna un documento identificado por su ID. El objeto retornado 
      * no conforma ninguna interface específica y por lo tanto el objeto
      * recuperado puede variar su estructura en forma independiente del 
-     * resto de los documento.
-     * Utilizar principalmente para el vista o edicion de documentos que
+     * resto de los documentos.
+     * Utilizar principalmente para la vista o edicion de documentos que
      * se han definido en forma dimanica por ejemplo atraves de form.io
      * 
      * @param idDocumento - identificar del documento a recuperar
@@ -134,7 +142,7 @@ export class DocumentoService {
       const url = `${this.apiUrl}/documentos`;
       return this.http.post<any>(url, documento, httpOptions).pipe(
         tap(_ => this.log(`documento guardado`)),
-        catchError(this.handleError<any>('saveDocumentoDinamico'))
+        catchError(this.handleError<any>('addDocumentoDinamico'))
       );
     }
 
