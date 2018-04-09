@@ -28,8 +28,8 @@ const apiFormUrl = 'http://localhost:3001/';  // URL to web api
               {provide: FormioResourceConfig,
                   // useClass: AppResourceConfig 
                 useValue: {
-                name: 'nuevoForm',
-                form: 'nuevoForm'}
+                name: 'vtvform',
+                form: 'vtvform'}
               
             }]
           })

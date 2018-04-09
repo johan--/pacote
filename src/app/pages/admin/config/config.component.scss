@@ -7,3 +7,19 @@
     border-top: none;
     border-bottom: none;
 }
+
+
+.card {
+    min-height: 220px;
+    max-height: 220px;
+    margin-bottom: 20px;
+}
+
+.botonera .btn-icon{
+    float: right;
+    padding: 0px;
+    border-radius: 90rem;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}

@@ -9,13 +9,15 @@ import { ConfigComponent } from './config/config.component';
 import { AdminComponent } from './admin.component';
 import { ConfigCreateComponent } from './config-create/config-create.component';
 import { ModalSelectDocumentoComponent } from './config-create/modal-select-documento.component';
+import { ModalSelectFuncionComponent } from './config-create/modal-select-funcion.component';
 
 const components = [
     AdminComponent,
     HomeComponent,
     ConfigComponent,
     ConfigCreateComponent,
-    ModalSelectDocumentoComponent
+    ModalSelectDocumentoComponent,
+    ModalSelectFuncionComponent
 ];
 
 @NgModule({
@@ -31,6 +33,7 @@ const components = [
     ],
     entryComponents: [
       ModalSelectDocumentoComponent,
+      ModalSelectFuncionComponent,
   ],
 
   })

@@ -1,0 +1,19 @@
+<div class="modal-header">
+        <span>Seleccione Función</span>
+        <button class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <div class="list-group">
+                <button *ngFor="let elem of listaSeleccion" type="button" 
+                    class="list-group-item list-group-item-action"
+                    (click)="selectElement(elem)">
+                        {{ elem.funcion }}
+                </button>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-md btn-primary" (click)="dismissModal()">Cancelar</button>
+        </div>

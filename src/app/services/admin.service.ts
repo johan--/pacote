@@ -61,6 +61,21 @@ export class AdminService {
       );
     }
 
+    getFuncionesByEmpresa(idEmpresa:number):Observable<any[]>{
+        const url = `${this.apiUrl}/configuraciones/funciones`;
+          return this.http.get<any[]>(url).pipe(
+              tap(funciones => this.log(`funciones recuperadas`)),
+              catchError(this.handleError('getFuncionesByEmpresa', []))
+          );
+    }
+
+    getFunciones(idEmpresa?:number):Observable<any[]>{
+        const url = `${this.apiUrl}/funciones`;
+          return this.http.get<any[]>(url).pipe(
+              tap(funciones => this.log(`funciones recuperadas`)),
+              catchError(this.handleError('getFunciones', []))
+          );
+    }
   
 
     /**
