@@ -10,11 +10,17 @@ nb-checkbox {
 .form-inline > * {
   margin: 0 1.5rem 1.5rem 0;
 }
-  
-nb-card.inline-form-card nb-card-body {
-  padding-bottom: 0;
-}
 
-.card-body {
-  padding: 1.25rem 1.25rem 0.25rem 1.25rem;
+.card {
+    // min-height: 220px;
+    // max-height: 220px;
+    margin-bottom: 20px;
 }
+  
+// nb-card.inline-form-card nb-card-body {
+//   padding-bottom: 0;
+// }
+
+// .card-body {
+//   padding: 1.25rem 1.25rem 0.25rem 1.25rem;
+// }

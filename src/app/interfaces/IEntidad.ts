@@ -1,7 +1,7 @@
 import { IDocumento } from "./IDocumento";
 
 export interface IEntidad {
-    id: string,
+    id: number,
     nombre: string,
     tipo: string,
     funcion: string,
@@ -9,3 +9,8 @@ export interface IEntidad {
     statusOk: Boolean,
     documentos: [IDocumento],
 }
+
+// function esOperador(entidadObj: IEntidad) {
+//     return entidadObj.id == 1;
+// }
+

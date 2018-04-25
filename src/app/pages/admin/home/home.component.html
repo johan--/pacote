@@ -10,20 +10,22 @@
         
         <h5>Seleccione una empresa para trabajar</h5>
         <hr>
-        <div class="card-deck">
-          <div *ngFor="let empresa of empresas" class="card">
-            <a routerLink="/pages/admin/config/empresas/{{empresa.id}}" >
-              <img class="card-img-top" src="{{ empresa.imagen }}" alt="{{ empresa.empresa }}">
-            </a>
-            <div class="card-body">
-              <!-- <h5 class="card-title">{{ doc.tipoDocumento }}</h5>
-              <a href="{{ doc.fileDownloadUrl }}" class="card-link">Download</a>
-              <p class="card-text"></p> -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-12" *ngFor="let empresa of empresas">
+                <div class="card">
+                    <a routerLink="/pages/admin/config/empresas/{{empresa.id}}" >
+                    <img class="card-img-top" src="{{ empresa.imagenUrl }}" alt="{{ empresa.nombre }}">
+                    </a>
+                    <div class="card-body">
+                    <!-- <h5 class="card-title">{{ doc.tipoDocumento }}</h5>
+                    <a href="{{ doc.fileDownloadUrl }}" class="card-link">Download</a>
+                    <p class="card-text"></p> -->
+                    </div>
+                    <div class="card-footer">
+                    <small class="text-muted">{{ empresa.nombre }}</small>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
-              <small class="text-muted">{{ empresa.empresa }}</small>
-            </div>
-          </div>
         </div>
         <br>
       </nb-card-body>

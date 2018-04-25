@@ -1,19 +1,19 @@
 <div class="modal-header">
-    <span>Seleccione Documento</span>
+    <span>Seleccione Tipo de Documento</span>
     <button class="close" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
     </button>
     </div>
     <div class="modal-body">
         <div class="list-group">
-            <button *ngFor="let tipo of tipoDocumentos" type="button" 
+            <button *ngFor="let elem of elementos" type="button" 
                 class="list-group-item list-group-item-action"
-                (click)="selectTipoDocumento(tipo)">
-                    {{ tipo.nombre }}
+                (click)="selectElement(elem)">
+                    {{ elem.nombre }}
             </button>
             
         </div>
     </div>
     <div class="modal-footer">
     <button class="btn btn-md btn-primary" (click)="dismissModal()">Cancelar</button>
-    </div>
+</div>

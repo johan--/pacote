@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
       <nb-card>
-        <nb-card-header *ngIf="empresa">Configuración Documentos Vehiculos ({{ empresa.empresa }})</nb-card-header>
+        <nb-card-header *ngIf="empresa">Configuración Documentos Operadores ({{ empresa.empresa }})</nb-card-header>
         <nb-card-body>
           <div class="row">
             <div class="col-md-4 col-sm-6 col-12">
@@ -14,58 +14,146 @@
                             <!-- <div class="col-4 col-md-6 col-sm-12">
                                 <a routerLink="/pages/admin/config/empresas/{{empresa.id}}/create" class="btn btn-primary btn-icon"><i class="nb-plus"></i></a>
                             </div> -->
-                            <button type="button" class="btn btn-primary btn-icon" (click)="selectFuncionModal()">
+                            <button type="button" class="btn btn-primary btn-icon" (click)="openModalFunciones(entidadOperadorId)">
                                 <i class="nb-plus"></i>
                             </button>
                         </div>
                     </div>
                     </div>
                 </div>
-              <div class="col-md-4 col-sm-6 col-12" *ngFor="let funcion of funciones">
+              <div class="col-md-4 col-sm-6 col-12" *ngFor="let config of configOperadores">
               <div class="card">
                   <div class="card-header">
-                      {{ funcion.funcion }}
+                      {{ config.nombre }}
                   </div>
                 <div class="card-body">
                     <table class="table table-clean table-sm">
                         <thead>
                           <tr>
-                            <!-- <th scope="col"></th> -->
+                            
                             <th scope="col">Documentos</th>
                             <th scope="col">Req.</th>
                             <th scope="col">Vence</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let doc of funcion.tiposDocumentos">
-                            <!-- <th scope="row"><a href="#"><i class="fa fa-pencil"></i></a></th> -->
-                            <td>{{ doc.tipoDocumento }}</td>
+                          <tr *ngFor="let funcion of config.configuracion">
+                            
+                            <td>{{ funcion.tipoDocumento.nombre }}</td>
                             <td class="text-center">
-                                <input class="form-check-input" type="checkbox" value="" id="requeridoCheck" [checked]="doc.requerido" (change)="doc.requerido = !doc.requerido">
+                                <input class="form-check-input" type="checkbox" value="" 
+                                    id="requeridoCheck" [checked]="funcion.docRequerido" 
+                                    (change)="changeDocEsRequerido(funcion)">
                             </td>
                             <td class="text-center">
-                                <input class="form-check-input" type="checkbox" value="" id="vencimientoCheck" [checked]="doc.vencimiento" (change)="doc.vencimiento = !doc.vencimiento">
+                                <input class="form-check-input" type="checkbox" value="" 
+                                    id="vencimientoCheck" [checked]="funcion.docTieneVencimiento"
+                                    (change)="changeDocTieneVencimiento(funcion)">
                             </td>
                           </tr>
                         </tbody>
                     </table>
                     <div class="botonera">
-                        <button type="button" class="btn btn-primary btn-icon" (click)="selectDocumentoModal(funcion)">
+                        <button type="button" class="btn btn-primary btn-icon" (click)="openModalTipoDocumento(config)">
                             <i class="nb-plus"></i>
                         </button>
                     </div>
                 </div>
               </div>
             </div>
-          </div>
+         
+        </div>
         </nb-card-body>
       </nb-card>
     </div>
 
     <div class="col-md-12">
+        <nb-card>
+          <nb-card-header *ngIf="empresa">Configuración Documentos Vehiculos ({{ empresa.empresa }})</nb-card-header>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-md-4 col-sm-6 col-12">
+                  <div class="card">
+                      <div class="card-header">
+                          Nueva Configuración
+                      </div>
+                      <div class="card-body">
+                          <div class="row justify-content-center">
+                              <!-- <div class="col-4 col-md-6 col-sm-12">
+                                  <a routerLink="/pages/admin/config/empresas/{{empresa.id}}/create" class="btn btn-primary btn-icon"><i class="nb-plus"></i></a>
+                              </div> -->
+                              <button type="button" class="btn btn-primary btn-icon" (click)="openModalFunciones(entidadVehiculoId)">
+                                  <i class="nb-plus"></i>
+                              </button>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+                <div class="col-md-4 col-sm-6 col-12" *ngFor="let config of configVehiculos">
+                <div class="card">
+                    <div class="card-header">
+                        {{ config.nombre }}
+                    </div>
+                  <div class="card-body">
+                      <table class="table table-clean table-sm">
+                          <thead>
+                            <tr>
+                              
+                              <th scope="col">Documentos</th>
+                              <th scope="col">Req.</th>
+                              <th scope="col">Vence</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let funcion of config.configuracion">
+                              
+                              <td>{{ funcion.tipoDocumento.nombre }}</td>
+                              <td class="text-center">
+                                  <input class="form-check-input" type="checkbox" value="" 
+                                      id="requeridoCheck" [checked]="funcion.docRequerido" 
+                                      (change)="changeDocEsRequerido(funcion)">
+                              </td>
+                              <td class="text-center">
+                                  <input class="form-check-input" type="checkbox" value="" 
+                                      id="vencimientoCheck" [checked]="funcion.docTieneVencimiento"
+                                      (change)="changeDocTieneVencimiento(funcion)">
+                              </td>
+                            </tr>
+                          </tbody>
+                      </table>
+                      <div class="botonera">
+                          <button type="button" class="btn btn-primary btn-icon" (click)="openModalTipoDocumento(config)">
+                              <i class="nb-plus"></i>
+                          </button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+           
+          </div>
+          </nb-card-body>
+        </nb-card>
+
+    <!-- <div class="col-md-12">
         <nb-card class="inline-form-card">
           <nb-card-header *ngIf="empresa">Configuración Documentos Personas ({{ empresa.empresa }})</nb-card-header>
           <nb-card-body>
+            <div class="col-md-4 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Nueva Configuración
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <button type="button" class="btn btn-primary btn-icon" (click)="openModalFunciones(entidadOperadorId)">
+                                <i class="nb-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="card-columns">
                 <div class="card" *ngFor="let config of configuraciones">
                     <div class="card-header">
@@ -92,5 +180,5 @@
             </div>
           </nb-card-body>
         </nb-card>
-      </div>
+      </div> -->
 </div>

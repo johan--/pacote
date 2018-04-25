@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AdminService } from '../../../services/admin.service';
-import { ModalSelectDocumentoComponent } from './modal-select-documento.component';
+import { ModalSelectTipoDocumentoComponent } from './modal-select-documento.component';
 
 @Component({
   selector: 'config-create',
@@ -24,7 +24,7 @@ export class ConfigCreateComponent implements OnInit {
 
   selectDocumentoModal() {
     const activeModal = this.modalService.open(
-      ModalSelectDocumentoComponent, { size: 'sm', container: 'nb-layout' }).result.then((result) => {
+      ModalSelectTipoDocumentoComponent, { size: 'sm', container: 'nb-layout' }).result.then((result) => {
         if (result != null) {
           this.config = {
               tipoDocumento: result.nombre,
