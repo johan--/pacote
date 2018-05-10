@@ -11,8 +11,10 @@
                 (click)="selectElement(elem)">
                     {{ elem.nombre }}
             </button>
-            
         </div>
+        <form class="form-inline" (keydown)="keyDownFunction($event, idEmpresa, idEntidad)">
+            <input type="text" class="form-control full-width" placeholder="Nueva Función" name="nuevaFuncion" [(ngModel)]="nuevaFuncion">
+        </form>
     </div>
     <div class="modal-footer">
     <button class="btn btn-md btn-primary" (click)="dismissModal()">Cancelar</button>

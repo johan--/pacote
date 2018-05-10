@@ -33,7 +33,7 @@ export class AdminService {
      * @param idEmpresa - identificador de la empresa a recuperar
      */
     getEmpresaById(idEmpresa: number):Observable<any>{
-        const url = `${this.apiUrl}/empresas/${idEmpresa}`;
+        const url = `${this.apiUrlTest}/empresas/${idEmpresa}`;
         return this.http.get<any>(url).pipe(
           tap(_ => this.log(`getEmpresaById Empresa recuperada con id=${idEmpresa}`)),
           catchError(this.handleError<any>('getEmpresaById'))
@@ -70,17 +70,54 @@ export class AdminService {
     }
 
     /**
+     * Agrega una nueva funcion
+     * 
+     * @param funcion - nueva configuracion a guardar
+     */
+    addFuncion(funcion:any):any{
+        const url = `${this.apiUrlTest}/funciones`;
+        return this.http.post<any>(url, funcion, httpOptions).pipe(
+          tap(_ => this.log(`addFuncion guardada`)),
+          catchError(this.handleError<any>('addFuncion'))
+        );
+      }
+
+    /**
      * Actualiza una configuracion existente
      * 
      * @param configuracion - configuracion a actualizar
      */
     updateConfiguracion(configuracion:any):any{
-        console.log("######UPDATE CONFIGURACION");
-        console.log(configuracion);
         const url = `${this.apiUrlTest}/configuracionesfuncion/${configuracion.id}`;
         return this.http.put<any>(url, configuracion, httpOptions).pipe(
           tap(_ => this.log(`updateConfiguracion Configuracion actualizada`)),
           catchError(this.handleError<any>('updateConfiguracion'))
+        );
+      }
+
+    /**
+     * Elimina una configuracion existente
+     * 
+     * @param configuracion - configuracion a eliminar
+     */
+    deleteConfiguracion(configuracionId:any):any{
+        const url = `${this.apiUrlTest}/configuracionesfuncion/${configuracionId}`;
+        return this.http.delete<any>(url,httpOptions).pipe(
+          tap(_ => this.log(`deleteConfiguracion Configuracion eliminada`)),
+          catchError(this.handleError<any>('deleteConfiguracion'))
+        );
+      }
+
+    /**
+     * Elimina una configuracion existente
+     * 
+     * @param configuracion - configuracion a eliminar
+     */
+    deleteConfiguracionEntidad(configuracionId:any):any{
+        const url = `${this.apiUrlTest}/configuracionesfuncion/funcion/${configuracionId}`;
+        return this.http.delete<any>(url,httpOptions).pipe(
+          tap(_ => this.log(`deleteConfiguracion Configuracion eliminada`)),
+          catchError(this.handleError<any>('deleteConfiguracion'))
         );
       }
 
@@ -92,7 +129,7 @@ export class AdminService {
           );
     }
 
-    getTiposDocumentosByEmpresa(idEmpresa:number):Observable<any[]>{
+    getTiposDocumentosByEmpresa(idEmpresa?:number):Observable<any[]>{
         // Analizar la URL si se determina que los tipos de documentos son
         // por empresa
         // const url = `${this.apiUrlTest}/empresas/${idEmpresa}/funciones`;
@@ -132,6 +169,15 @@ export class AdminService {
 
     getFuncionesByEntidad(idEntidad:number):Observable<any[]>{
         const url = `${this.apiUrlTest}/entidades/${idEntidad}/funciones`;
+          return this.http.get<any[]>(url).pipe(
+              tap(funciones => this.log(`funciones recuperadas`)),
+              catchError(this.handleError('getFuncionesByEntidad', []))
+          );
+    }
+
+
+    getFuncionesByEntidadEmpresa(idEntidad:number, idEmpresa:number):Observable<any[]>{
+        const url = `${this.apiUrlTest}/entidades/${idEntidad}/funciones?filter[where][empresaId]=${idEmpresa}`;
           return this.http.get<any[]>(url).pipe(
               tap(funciones => this.log(`funciones recuperadas`)),
               catchError(this.handleError('getFuncionesByEntidad', []))

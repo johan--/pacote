@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { DocumentoService } from '../../../services/documento.service';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
   selector: 'documento-modal-tipo-documentos',
@@ -19,7 +19,7 @@ export class DocumentoModalTipoDocumentosComponent implements OnInit {
 
   constructor(private activeModal: NgbActiveModal,
     private router: Router,
-    private documentoService: DocumentoService) { }
+    private adminService: AdminService) { }
 
   closeModal() {
     this.activeModal.close();
@@ -40,7 +40,7 @@ export class DocumentoModalTipoDocumentosComponent implements OnInit {
   }
 
   getTiposDocumentos():void{
-    this.documentoService.getTiposDocumentos()
+    this.adminService.getTiposDocumentosByEmpresa()
     .subscribe(tiposDocumentos => {
       this.tipoDocumentos = tiposDocumentos;
     }, error => this.errorMessage = <any>error);

@@ -69,23 +69,32 @@ export class ConfigComponent implements OnInit {
     ngOnInit() {
         this.configOperadores = [];
         this.getEmpresaById();
-        this.getConfiguracionesVehiculos();
-        this.getConfiguracionesOperadores();
+        this.getConfiguracionesByEntidad(this.entidadOperadorId);
+        this.getConfiguracionesByEntidad(this.entidadVehiculoId);
     }
 
-    getConfiguracionesVehiculos(){
+    getConfiguracionesByEntidad(entidadId){
         const idEmpresa = +this.route.snapshot.paramMap.get('idEmpresa');
-        this.adminService.getFuncionesByEmpresaEntidad(idEmpresa, this.entidadVehiculoId)
-            .subscribe(configuracion => {
-                this.configVehiculos = configuracion;
-            }, error => this.errorMessage = <any>error);
-    }
-
-    getConfiguracionesOperadores(){
-        const idEmpresa = +this.route.snapshot.paramMap.get('idEmpresa');
-        this.adminService.getFuncionesByEmpresaEntidad(idEmpresa, this.entidadOperadorId)
-            .subscribe(configuracion => {
-                this.configOperadores = configuracion;
+        this.adminService.getFuncionesByEmpresaEntidad(idEmpresa, entidadId)
+            .subscribe(configuracionEntidad => {
+                var confValidas = [];
+                // Quitamos aquellas funciones de las configuraciones que 
+                // aun no tienen asociado/vinculado tipos de documentos 
+                for (var i in configuracionEntidad) {
+                    if (configuracionEntidad[i].configuracion.length > 0){
+                        confValidas.push(configuracionEntidad[i]);
+                    }
+                }
+                switch (entidadId) {
+                    case this.entidadVehiculoId:
+                      this.configVehiculos = confValidas;
+                      break;
+                    case this.entidadOperadorId:
+                      this.configOperadores = confValidas;
+                      break;
+                    // Agregar futuras entidades
+                  }
+               
             }, error => this.errorMessage = <any>error);
     }
 
@@ -99,27 +108,39 @@ export class ConfigComponent implements OnInit {
      * @param idEntidad - Identificador para filtrar las funciones
      */
     openModalFunciones(idEntidad: number) {
-        const idEmpresa = +this.route.snapshot.paramMap.get('idEmpresa');
-        this.adminService.getFuncionesByEntidad(idEntidad)
+        const idEmpresa = this.empresa.id;
+        this.adminService.getFuncionesByEntidadEmpresa(idEntidad, idEmpresa)
             .subscribe(funciones => {
                 // Una vez filtradas las funciones abrimos el modal
                 const activeModal = this.modalService
                     .open(ModalSelectFuncionComponent,{ size: 'sm', container: 'nb-layout' });
                 activeModal.componentInstance.elementos = funciones;
+                activeModal.componentInstance.idEmpresa = this.empresa.id;
+                activeModal.componentInstance.idEntidad = idEntidad;
             }, error => this.errorMessage = <any>error);
     }
 
     closeModalFuncionListener(funcionSeleccionada){
         funcionSeleccionada.configuracion = [];
-        this.configOperadores.unshift(funcionSeleccionada);
+        switch (funcionSeleccionada.entidadId) {
+            case this.entidadVehiculoId:
+                this.configVehiculos.unshift(funcionSeleccionada);
+                break;
+            case this.entidadOperadorId:
+                this.configOperadores.unshift(funcionSeleccionada);
+                break;
+            // Agregar futuras entidades
+          }
     }
 
     openModalTipoDocumento(funcion: any) {
         this.activeSelectedFuncion = funcion;
-        const idEmpresa = +this.route.snapshot.paramMap.get('idEmpresa');
+        console.log(funcion);
+        const idEmpresa = this.empresa.id;
         this.adminService.getTiposDocumentosByEmpresa(idEmpresa)
             .subscribe(tiposDocumentos => {
                 // Una vez filtradas las funciones abrimos el modal
+                console.log(tiposDocumentos);
                 const activeModal = this.modalService
                     .open(ModalSelectTipoDocumentoComponent,{ size: 'sm', container: 'nb-layout' });
                 activeModal.componentInstance.elementos = tiposDocumentos;
@@ -128,7 +149,9 @@ export class ConfigComponent implements OnInit {
 
 
     closeModalTipoDocumentoListener(tipoDocumentoSeleccionado){
+        console.log(tipoDocumentoSeleccionado);
         var newConfig = {
+                empresaId: this.empresa.id,
                 funcionId: this.activeSelectedFuncion.id,
                 tipoDocumentoId: tipoDocumentoSeleccionado.id,
                 docRequerido: true,
@@ -178,6 +201,24 @@ export class ConfigComponent implements OnInit {
     actualizarConfiguracion(configuracion){
         this.adminService.updateConfiguracion(configuracion)
             .subscribe(configuracionActualizada => {      
+            }, error => this.errorMessage = <any>error);
+    }
+
+    eliminarConfiguracion(configEntidad, configuracion, index){
+        this.adminService.deleteConfiguracion(configuracion.id)
+            .subscribe(result => {
+                if (result.count == 1){
+                    configEntidad.configuracion.splice(index, 1);    
+                }      
+            }, error => this.errorMessage = <any>error);
+    }
+
+    eliminarConfiguracionEntidad(configEntidad, configuracion, index){
+        this.adminService.deleteConfiguracionEntidad(configuracion.id)
+            .subscribe(result => {
+                if (result.count == 1){
+                    configEntidad.splice(index, 1);    
+                }      
             }, error => this.errorMessage = <any>error);
     }
 

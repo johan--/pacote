@@ -16,6 +16,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DocumentoService } from './services/documento.service';
+import { AdminService } from './services/admin.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { DocumentoService } from './services/documento.service';
   bootstrap: [AppComponent],
   providers: [
     DocumentoService,
+    AdminService,
     { provide: APP_BASE_HREF, useValue: '/' },
   ],
 })

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
       <nb-card>
-        <nb-card-header *ngIf="empresa">Configuración Documentos Operadores ({{ empresa.empresa }})</nb-card-header>
+        <nb-card-header *ngIf="empresa">Configuración Documentos Operadores ({{ empresa.nombre }})</nb-card-header>
         <nb-card-body>
           <div class="row">
             <div class="col-md-4 col-sm-6 col-12">
@@ -21,24 +21,25 @@
                     </div>
                     </div>
                 </div>
-              <div class="col-md-4 col-sm-6 col-12" *ngFor="let config of configOperadores">
+              <div class="col-md-4 col-sm-6 col-12" *ngFor="let config of configOperadores; let i = index">
               <div class="card">
                   <div class="card-header">
                       {{ config.nombre }}
+                      <a [routerLink]="" (click)="eliminarConfiguracionEntidad(configOperadores, config, i)"><i class="nb-trash"></i></a>
                   </div>
                 <div class="card-body">
                     <table class="table table-clean table-sm">
                         <thead>
                           <tr>
-                            
+                            <th scope="col"></th>
                             <th scope="col">Documentos</th>
                             <th scope="col">Req.</th>
                             <th scope="col">Vence</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let funcion of config.configuracion">
-                            
+                          <tr *ngFor="let funcion of config.configuracion; let i = index">
+                            <td class="text-center"><a [routerLink]="" (click)="eliminarConfiguracion(config, funcion, i)"><i class="nb-trash"></i></a></td>
                             <td>{{ funcion.tipoDocumento.nombre }}</td>
                             <td class="text-center">
                                 <input class="form-check-input" type="checkbox" value="" 
@@ -69,7 +70,7 @@
 
     <div class="col-md-12">
         <nb-card>
-          <nb-card-header *ngIf="empresa">Configuración Documentos Vehiculos ({{ empresa.empresa }})</nb-card-header>
+          <nb-card-header *ngIf="empresa">Configuración Documentos Vehiculos ({{ empresa.nombre }})</nb-card-header>
           <nb-card-body>
             <div class="row">
               <div class="col-md-4 col-sm-6 col-12">
@@ -98,7 +99,7 @@
                       <table class="table table-clean table-sm">
                           <thead>
                             <tr>
-                              
+                              <th scope="col"></th>
                               <th scope="col">Documentos</th>
                               <th scope="col">Req.</th>
                               <th scope="col">Vence</th>
@@ -106,7 +107,7 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let funcion of config.configuracion">
-                              
+                              <td><a [routerLink]="" (click)="eliminarConfiguracion(config, funcion, i)"><i class="nb-trash"></i></a></td>
                               <td>{{ funcion.tipoDocumento.nombre }}</td>
                               <td class="text-center">
                                   <input class="form-check-input" type="checkbox" value="" 

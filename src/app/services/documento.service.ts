@@ -18,6 +18,7 @@ const httpOptions = {
 export class DocumentoService {
 
     private apiUrl = 'https://private-1e69fb-micradoc.apiary-mock.com';  // URL to web api
+    private apiUrlTest = 'http://localhost:3000/api';  // URL to web api
 
     constructor(private http: HttpClient) { }
 
@@ -110,6 +111,7 @@ export class DocumentoService {
 
     /**
      * Retorna un listado de tipos de documentos.
+     * @deprecated Usar admin.service
      */
     getTiposDocumentos():Observable<any[]>{
       const url = `${this.apiUrl}/documentos/tipos_documentos`;
